@@ -16,27 +16,24 @@ package grails.plugin.cache.ehcache
 
 import groovyx.gpars.GParsPool
 import net.sf.ehcache.CacheManager
-import org.junit.After
+import spock.lang.Specification
 
 /**
  * @author Andrew Walters
  */
-class EhcacheCacheManagerTests extends GroovyTestCase {
+class EhcacheCacheManagerTests extends Specification {
 
 	protected GrailsEhcacheCacheManager manager = new GrailsEhcacheCacheManager()
 
-	@Override
-	protected void setUp() {
-		super.setUp()
+	def setup() {
 		manager.cacheManager = CacheManager.create()
 	}
 
-	@After
-	public void after() {
+	def cleanup() {
 		manager.cacheManager.shutdown()
 	}
 
-	void testCacheCreationSerialAccess() {
+	def "test Cache Creation Serial Access"() {
 		(0..10).each {
 			assert manager.getCache('testCache')
 		}
@@ -46,7 +43,7 @@ class EhcacheCacheManagerTests extends GroovyTestCase {
 	 * As a parallel access isn't guaranteed to result in traversing the code at the same time, loop a number
 	 * of times to try and cause the simultaneous access to getCache()
 	 */
-	void testCacheCreationParallelAccess() {
+	def "test Cache Creation Parallel Access"() {
 		assert !manager.cacheExists('testCache')
 
 		100.times {
@@ -60,7 +57,7 @@ class EhcacheCacheManagerTests extends GroovyTestCase {
 		}
 	}
 
-	void testCacheGetParallelAccess() {
+	def "test Cache Get Parallel Access"() {
 		manager.getCache('testCache')
 		assert manager.cacheExists('testCache')
 

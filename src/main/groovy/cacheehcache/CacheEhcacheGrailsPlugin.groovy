@@ -16,8 +16,6 @@ class CacheEhcacheGrailsPlugin extends Plugin {
         "grails-app/views/error.gsp"
     ]
 
-    def version = '2.0.0.BUILD-SNAPSHOT'
-
     def title = "Cache Ehcache" // Headline display name of the plugin
     def author = "Jeff Brown"
     def authorEmail = "jeff@jeffandbetsy.net"

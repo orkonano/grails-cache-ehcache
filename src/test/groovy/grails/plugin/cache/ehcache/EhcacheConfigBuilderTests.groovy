@@ -15,11 +15,12 @@
 package grails.plugin.cache.ehcache
 
 import grails.util.Environment
+import spock.lang.Specification
 
 /**
  * @author Burt Beckwith
  */
-class EhcacheConfigBuilderTests extends GroovyTestCase {
+class EhcacheConfigBuilderTests extends Specification {
 
 	protected EhcacheConfigBuilder builder
 	protected String xml
