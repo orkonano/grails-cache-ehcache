@@ -96,3 +96,25 @@ grailsPublish {
     portalUser = ""
     portalPassword = ""
 }
+
+//Publish
+
+def bambooRepositoryUsername = System.getenv('BAMBOO_REPOSITORY_USERNAME') ?: project.hasProperty('bambooRepositoryUsername') ? project.bambooRepositoryUsername : ''
+def bambooRepositoryPassword = System.getenv("BAMBOO_REPOSITORY_PASSWORD") ?: project.hasProperty('bambooRepositoryPassword') ? project.bambooRepositoryPassword : ''
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username bambooRepositoryUsername
+                password bambooRepositoryPassword
+            }
+            if (version.endsWith("-SNAPSHOT")){
+                url "http://nexus-bambooarg.rhcloud.com/nexus/content/repositories/snapshots/"
+            }else{
+                url "http://nexus-bambooarg.rhcloud.com/nexus/content/repositories/releases/"
+
+            }
+        }
+    }
+}
